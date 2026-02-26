@@ -18,6 +18,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "composite": true,
+    "rootDir": "src",
     "paths": {
       "@/*": ["src/*"]
     }

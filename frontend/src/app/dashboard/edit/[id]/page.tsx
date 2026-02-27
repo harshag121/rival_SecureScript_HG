@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { use } from 'react';
+import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { BlogEditor } from '@/components/BlogEditor';
-import { PageLoader } from '@/components/LoadingSpinner';
 import { blogApi, Blog } from '@/lib/blog-api';
 import toast from 'react-hot-toast';
 
@@ -21,28 +21,48 @@ export default function EditBlogPage({ params }: EditBlogPageProps) {
     blogApi
       .getOne(id)
       .then(setBlog)
-      .catch(() => toast.error('Blog not found'))
+      .catch(() => toast.error('Story not found'))
       .finally(() => setIsLoading(false));
   }, [id]);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-900" style={{ fontFamily: 'Merriweather, Georgia, serif' }}>
-            Edit Story
-          </h1>
-          <p className="text-neutral-400 text-sm mt-1">Make your story better.</p>
+
+      <main className="flex-1">
+        <div className="max-w-[760px] mx-auto px-4 sm:px-6 py-10">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-ink-muted mb-8">
+            <Link href="/dashboard" className="hover:text-ink transition-colors">Dashboard</Link>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 5l7 7-7 7" />
+            </svg>
+            <span className="text-ink font-medium truncate max-w-[240px]">
+              {blog?.title || 'Edit Story'}
+            </span>
+          </div>
+
+          {isLoading ? (
+            <div className="space-y-5">
+              <div className="skeleton h-12 w-full rounded-xl" />
+              <div className="skeleton h-24 w-full rounded-xl" />
+              <div className="skeleton h-80 w-full rounded-xl" />
+            </div>
+          ) : blog ? (
+            <BlogEditor mode="edit" initialData={blog} />
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-ink-secondary mb-4">Story not found.</p>
+              <Link href="/dashboard" className="btn-secondary">Back to Dashboard</Link>
+            </div>
+          )}
         </div>
-        {isLoading ? (
-          <div className="space-y-4">{[1,2,3].map(i => <div key={i} className="animate-pulse h-12 bg-neutral-100 rounded-xl" />)}</div>
-        ) : blog ? (
-          <BlogEditor mode="edit" initialData={blog} />
-        ) : (
-          <p className="text-red-500 text-center py-8">Story not found</p>
-        )}
       </main>
-    </>
+    </div>
   );
 }
+
+interface EditBlogPageProps {
+  params: Promise<{ id: string }>;
+}
+

@@ -10,11 +10,11 @@ export class CreateBlogDto {
   @IsString()
   @MinLength(3)
   @MaxLength(200)
-  title: string;
+  title!: string;
 
   @IsString()
   @MinLength(10)
-  content: string;
+  content!: string;
 
   @IsOptional()
   @IsBoolean()

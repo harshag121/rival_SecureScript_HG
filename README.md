@@ -80,6 +80,38 @@ rival_SecureScript_HG/
 
 ---
 
+## 🧠 CortexOne Research Notes
+
+As part of the assessment, I reviewed the public CortexOne Rival platform pages and product positioning:
+
+- Rival presents itself as an **AI Function Marketplace** where developers can publish/sell functions and teams can run functions and agents in production.
+- The platform emphasizes **serverless MCP server execution** and AI workflow orchestration via CortexOne.
+- The security positioning highlights **zero-trust execution**, isolated workloads, and encrypted processing for production AI use cases.
+
+### Function Concept Submitted (Assessment-Oriented)
+
+**Function name:** `SecureBlog Publish Readiness Check`  
+**Goal:** Improve publishing quality and reduce risky/low-quality posts before they go live.
+
+**What it does:**
+- Validates title/content quality (length, clarity, structure checks)
+- Flags potentially sensitive data patterns (emails, phone numbers, token-like strings)
+- Generates a concise publish summary + quality score
+- Returns actionable suggestions to improve readability and safety
+
+**Why this is useful for this project:**
+- Integrates naturally with the blog publish flow
+- Improves trust/safety and editorial quality
+- Demonstrates product thinking beyond basic CRUD
+
+**Reference pages researched:**
+- https://cortexone.rival.io/
+- https://cortexone.rival.io/marketplace
+- https://cortexone.rival.io/cortex-one
+- https://cortexone.rival.io/security
+
+---
+
 ## 🔐 Security Practices
 
 | Practice | Implementation |

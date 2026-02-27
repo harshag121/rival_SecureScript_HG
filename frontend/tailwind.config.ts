@@ -9,46 +9,36 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        surface: '#fafafa',
-        border: '#e5e5e5',
+        surface: '#f3f5f4',
+        border: '#dfe4e1',
         ink: {
-          DEFAULT: '#0a0a0a',
-          secondary: '#525252',
-          muted: '#a3a3a3',
-          faint: '#d4d4d4',
+          DEFAULT: '#0f1720',
+          secondary: '#4a5565',
+          muted: '#95a0ac',
+          faint: '#c6cfd7',
         },
         accent: {
-          DEFAULT: '#6366f1',
-          light: '#eef2ff',
-          muted: '#c7d2fe',
+          DEFAULT: '#0f766e',
+          light: '#e6f6f4',
+          muted: '#99ddd8',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        serif: ['Source Serif 4', 'Georgia', 'serif'],
       },
       boxShadow: {
-        card: '0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06)',
-        'card-hover': '0 4px 16px 0 rgb(0 0 0 / 0.08), 0 2px 8px -2px rgb(0 0 0 / 0.06)',
-        modal: '0 20px 60px -12px rgb(0 0 0 / 0.15), 0 8px 24px -4px rgb(0 0 0 / 0.08)',
+        card: '0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05)',
+        'card-hover': '0 10px 26px -10px rgb(0 0 0 / 0.12), 0 2px 8px -2px rgb(0 0 0 / 0.08)',
+        modal: '0 22px 64px -18px rgb(0 0 0 / 0.20), 0 8px 24px -4px rgb(0 0 0 / 0.08)',
       },
       keyframes: {
         'fade-in': { from: { opacity: '0', transform: 'translateY(8px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
-        'skeleton': { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.4' } },
+        skeleton: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0.4' } },
       },
       animation: {
         'fade-in': 'fade-in 0.35s ease both',
-        'skeleton': 'skeleton 1.5s ease-in-out infinite',
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            '--tw-prose-body': '#404040',
-            '--tw-prose-headings': '#0a0a0a',
-            lineHeight: '1.85',
-            fontSize: '1.1rem',
-          },
-        },
+        skeleton: 'skeleton 1.5s ease-in-out infinite',
       },
     },
   },

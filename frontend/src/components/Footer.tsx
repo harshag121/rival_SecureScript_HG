@@ -1,36 +1,26 @@
 import Link from 'next/link';
+import { Brand } from '@/components/ui/Brand';
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-auto">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-ink flex items-center justify-center">
-            <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M2 2h12v2H2V2zm0 4h8v2H2V6zm0 4h10v2H2v-2z" />
-            </svg>
-          </div>
-          <span className="text-sm font-semibold text-ink">SecureBlog</span>
-        </div>
+    <footer className="mt-auto border-t border-border/70 bg-white/70">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 py-8 sm:flex-row sm:px-6">
+        <Brand compact />
 
         <nav className="flex items-center gap-6">
-          {[
-            { href: '/feed', label: 'Feed' },
-            { href: '/login', label: 'Sign in' },
-            { href: '/register', label: 'Register' },
-          ].map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="text-xs text-ink-muted hover:text-ink transition-colors"
-            >
-              {label}
-            </Link>
-          ))}
+          <Link href="/feed" className="footer-link">
+            Feed
+          </Link>
+          <Link href="/login" className="footer-link">
+            Sign in
+          </Link>
+          <Link href="/register" className="footer-link">
+            Register
+          </Link>
         </nav>
 
         <p className="text-xs text-ink-muted">
-          © {new Date().getFullYear()} SecureBlog. Built with Next.js & NestJS.
+          © {new Date().getFullYear()} SecureBlog
         </p>
       </div>
     </footer>

@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
 import { BlogCard } from '@/components/BlogCard';
 import { ArticleSkeleton, EmptyState } from '@/components/LoadingSpinner';
+import { PageShell } from '@/components/layout/PageShell';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { publicApi, Blog, FeedMeta } from '@/lib/blog-api';
 
 const TOPICS = ['Technology', 'Design', 'AI', 'Programming', 'Science', 'Productivity', 'Startups', 'Writing'];
@@ -30,7 +30,9 @@ export default function FeedPage() {
     }
   };
 
-  useEffect(() => { fetchFeed(1); }, []);
+  useEffect(() => {
+    fetchFeed(1);
+  }, []);
 
   const handleLoadMore = () => {
     const next = page + 1;
@@ -40,110 +42,87 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Navbar />
-
-      {/* Page header */}
-      <div className="border-b border-border bg-surface">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-          <h1 className="text-3xl font-bold text-ink tracking-tight mb-1">Feed</h1>
-          <p className="text-ink-secondary text-[0.9375rem]">
-            Stories from the community, sorted by newest
-          </p>
+    <PageShell className="bg-surface">
+      <div className="border-b border-border bg-white/70">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <SectionHeading title="Public Feed" subtitle="Stories from the community, sorted by newest." />
         </div>
       </div>
 
-      <div className="flex-1">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 flex gap-14">
+      <div className="mx-auto flex max-w-6xl gap-14 px-4 py-10 sm:px-6">
+        <section className="min-w-0 flex-1 rounded-2xl border border-border/80 bg-white px-6 py-4 shadow-card">
+          {isLoading ? (
+            <div>{[1, 2, 3, 4].map((i) => <ArticleSkeleton key={i} />)}</div>
+          ) : error ? (
+            <div className="py-20 text-center">
+              <p className="mb-5 text-sm text-ink-secondary">{error}</p>
+              <button
+                onClick={() => {
+                  setError(null);
+                  setIsLoading(true);
+                  fetchFeed(1);
+                }}
+                className="btn-primary"
+              >
+                Try again
+              </button>
+            </div>
+          ) : blogs.length === 0 ? (
+            <EmptyState
+              icon="📭"
+              title="No stories yet"
+              description="Be the first to publish a story and it will appear here."
+            />
+          ) : (
+            <>
+              <div>{blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)}</div>
 
-          {/* Main feed */}
-          <main className="flex-1 min-w-0">
-            {isLoading ? (
-              <div>{[1, 2, 3, 4].map((i) => <ArticleSkeleton key={i} />)}</div>
-            ) : error ? (
-              <div className="text-center py-20">
-                <p className="text-ink-secondary mb-5 text-sm">{error}</p>
-                <button onClick={() => { setError(null); setIsLoading(true); fetchFeed(1); }} className="btn-primary">
-                  Try again
-                </button>
-              </div>
-            ) : blogs.length === 0 ? (
-              <EmptyState
-                icon="📭"
-                title="No stories yet"
-                description="Be the first to publish a story and it will appear here."
-              />
-            ) : (
-              <>
-                <div>
-                  {blogs.map((blog) => <BlogCard key={blog.id} blog={blog} />)}
+              {meta?.hasNextPage && (
+                <div className="flex justify-center pt-12">
+                  <button onClick={handleLoadMore} disabled={isLoadingMore} className="btn-secondary min-w-[160px]">
+                    {isLoadingMore ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-neutral-300 border-t-ink" />
+                        Loading...
+                      </span>
+                    ) : (
+                      'Load more stories'
+                    )}
+                  </button>
                 </div>
+              )}
 
-                {meta?.hasNextPage && (
-                  <div className="flex justify-center pt-12">
-                    <button
-                      onClick={handleLoadMore}
-                      disabled={isLoadingMore}
-                      className="btn-secondary min-w-[160px]"
-                    >
-                      {isLoadingMore ? (
-                        <span className="flex items-center gap-2">
-                          <span className="w-3.5 h-3.5 rounded-full border-2 border-neutral-300 border-t-ink animate-spin" />
-                          Loading…
-                        </span>
-                      ) : (
-                        'Load more stories'
-                      )}
-                    </button>
-                  </div>
-                )}
-
-                {meta && (
-                  <p className="text-center text-xs text-ink-muted pt-6">
-                    Showing {blogs.length} of {meta.total} {meta.total === 1 ? 'story' : 'stories'}
-                  </p>
-                )}
-              </>
-            )}
-          </main>
-
-          {/* Sidebar */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="sticky top-20 space-y-8">
-              <div>
-                <h3 className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-4">
-                  Discover topics
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {TOPICS.map((t) => (
-                    <span key={t} className="tag cursor-pointer text-xs">{t}</span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-border pt-8">
-                <h3 className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-3">
-                  About
-                </h3>
-                <p className="text-xs text-ink-secondary leading-relaxed">
-                  SecureBlog is a production-grade platform for curious minds to publish, discover, and engage with ideas that matter.
+              {meta && (
+                <p className="pt-6 text-center text-xs text-ink-muted">
+                  Showing {blogs.length} of {meta.total} {meta.total === 1 ? 'story' : 'stories'}
                 </p>
-              </div>
+              )}
+            </>
+          )}
+        </section>
 
-              <div className="text-xs text-ink-muted leading-relaxed">
-                <div className="flex flex-wrap gap-x-3 gap-y-1">
-                  {['Help', 'Privacy', 'Terms'].map((l) => (
-                    <span key={l} className="hover:text-ink cursor-pointer transition-colors">{l}</span>
-                  ))}
-                </div>
+        <aside className="hidden w-64 flex-shrink-0 lg:block">
+          <div className="sticky top-20 space-y-6 rounded-2xl border border-border/80 bg-white p-5 shadow-card">
+            <div>
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-ink-muted">Discover topics</h3>
+              <div className="flex flex-wrap gap-2">
+                {TOPICS.map((t) => (
+                  <span key={t} className="tag cursor-pointer text-xs">
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
-          </aside>
-        </div>
-      </div>
 
-      <Footer />
-    </div>
+            <div className="border-t border-border pt-5">
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-ink-muted">About</h3>
+              <p className="text-xs leading-relaxed text-ink-secondary">
+                SecureBlog is a production-grade platform for publishing, discovering, and discussing ideas that matter.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </PageShell>
   );
 }
-

@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import clsx from 'clsx';
 import { likeApi } from '@/lib/blog-api';
 import { useAuth } from '@/contexts/auth-context';
-import clsx from 'clsx';
 import { getErrorMessage } from '@/lib/error-message';
 
 interface LikeButtonProps {
@@ -27,13 +27,14 @@ export function LikeButton({ blogId, initialLiked, initialCount }: LikeButtonPro
       router.push('/login');
       return;
     }
-    const newLiked = !liked;
-    // Optimistic update
-    setLiked(newLiked);
-    setCount(newLiked ? count + 1 : count - 1);
+
+    const nextLiked = !liked;
+    setLiked(nextLiked);
+    setCount(nextLiked ? count + 1 : count - 1);
     setIsPending(true);
+
     try {
-      const res = newLiked ? await likeApi.like(blogId) : await likeApi.unlike(blogId);
+      const res = nextLiked ? await likeApi.like(blogId) : await likeApi.unlike(blogId);
       setLiked(res.liked);
       setCount(res.likeCount);
     } catch (error: unknown) {
@@ -50,21 +51,15 @@ export function LikeButton({ blogId, initialLiked, initialCount }: LikeButtonPro
       onClick={handleToggle}
       disabled={isPending}
       className={clsx(
-        'inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border-2 text-sm font-medium',
-        'transition-all duration-150 active:scale-95 focus:outline-none',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
+        'inline-flex items-center gap-2.5 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-150 active:scale-95 focus:outline-none',
+        'disabled:cursor-not-allowed disabled:opacity-50',
         liked
-          ? 'bg-red-50 border-red-300 text-red-600 hover:bg-red-100'
-          : 'bg-white border-border text-ink-secondary hover:border-neutral-400 hover:text-ink',
+          ? 'border-teal-300 bg-teal-50 text-teal-700 hover:bg-teal-100'
+          : 'border-border bg-white text-ink-secondary hover:border-neutral-400 hover:text-ink',
       )}
       aria-label={liked ? `Unlike (${count})` : `Like (${count})`}
     >
-      <svg
-        className={clsx('w-4 h-4 transition-transform duration-150', liked && 'scale-110')}
-        fill={liked ? 'currentColor' : 'none'}
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
+      <svg className={clsx('h-4 w-4 transition-transform duration-150', liked && 'scale-110')} fill={liked ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -76,10 +71,3 @@ export function LikeButton({ blogId, initialLiked, initialCount }: LikeButtonPro
     </button>
   );
 }
-
-interface LikeButtonProps {
-  blogId: string;
-  initialLiked: boolean;
-  initialCount: number;
-}
-

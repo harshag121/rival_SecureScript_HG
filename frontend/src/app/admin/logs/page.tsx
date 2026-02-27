@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
+import { PageShell } from '@/components/layout/PageShell';
 
 interface LogEntry {
   timestamp: string;
@@ -99,8 +98,7 @@ export default function LogsPage() {
   );
 
   return (
-    <>
-      <Navbar />
+      <PageShell className="bg-surface">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
@@ -189,7 +187,6 @@ export default function LogsPage() {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+    </PageShell>
   );
 }

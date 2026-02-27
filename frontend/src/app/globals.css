@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
-/* ─── Base ─────────────────────────────────────────────────────── */
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
 
@@ -15,8 +14,7 @@
 
   body {
     @apply bg-surface text-ink antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-family: 'Manrope', system-ui, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -28,128 +26,136 @@
   }
 }
 
-/* ─── Components ────────────────────────────────────────────────── */
 @layer components {
+  .page-shell {
+    @apply min-h-screen flex flex-col;
+  }
 
-  /* ── Buttons ─────────────────────────────────── */
+  .brand-mark {
+    @apply inline-flex items-center justify-center rounded-xl bg-ink shadow-card;
+  }
+
+  .brand-wordmark {
+    @apply text-[0.95rem] font-extrabold tracking-tight text-ink;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-glow {
+    @apply pointer-events-none absolute -right-28 -top-36 h-[460px] w-[460px] rounded-full blur-3xl;
+    background: radial-gradient(circle at center, rgba(13, 148, 136, 0.24), rgba(255, 255, 255, 0));
+  }
+
+  .hero-grid {
+    @apply pointer-events-none absolute inset-0 opacity-[0.04];
+    background-image:
+      linear-gradient(#000 1px, transparent 1px),
+      linear-gradient(to right, #000 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .auth-shell {
+    @apply relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12;
+    background: linear-gradient(180deg, #f8fbfa 0%, #f3f7f6 100%);
+  }
+
+  .auth-glow {
+    @apply pointer-events-none absolute left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl;
+    background: radial-gradient(circle at center, rgba(13, 148, 136, 0.18), rgba(255, 255, 255, 0));
+  }
+
+  .auth-grid {
+    @apply pointer-events-none absolute inset-0 opacity-[0.03];
+    background-image:
+      linear-gradient(#000 1px, transparent 1px),
+      linear-gradient(to right, #000 1px, transparent 1px);
+    background-size: 52px 52px;
+  }
+
+  .auth-card {
+    @apply rounded-2xl border border-border bg-white p-8 shadow-modal;
+  }
+
+  .form-label {
+    @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+
   .btn {
-    @apply inline-flex items-center justify-center gap-2 font-medium
-           transition-all duration-150 select-none focus:outline-none
-           disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-2 font-semibold transition-all duration-150 select-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.97];
   }
 
   .btn-primary {
-    @apply btn px-5 py-2.5 rounded-full bg-ink text-white text-sm
-           hover:bg-neutral-700
-           focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2;
+    @apply btn rounded-full bg-ink px-5 py-2.5 text-sm text-white hover:bg-neutral-700 focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2;
   }
 
   .btn-secondary {
-    @apply btn px-5 py-2.5 rounded-full bg-white text-ink text-sm
-           border border-border hover:border-neutral-400 hover:bg-neutral-50
-           focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2;
+    @apply btn rounded-full border border-border bg-white px-5 py-2.5 text-sm text-ink hover:border-neutral-400 hover:bg-neutral-50 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2;
   }
 
   .btn-ghost {
-    @apply btn px-4 py-2 rounded-lg text-ink-secondary text-sm
-           hover:bg-neutral-100 focus-visible:ring-2 focus-visible:ring-neutral-300;
+    @apply btn rounded-lg px-4 py-2 text-sm text-ink-secondary hover:bg-neutral-100 hover:text-ink focus-visible:ring-2 focus-visible:ring-neutral-300;
   }
 
   .btn-danger {
-    @apply btn px-5 py-2.5 rounded-full bg-red-600 text-white text-sm
-           hover:bg-red-700
-           focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2;
+    @apply btn rounded-full bg-red-600 px-5 py-2.5 text-sm text-white hover:bg-red-700 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2;
   }
 
   .btn-accent {
-    @apply btn px-5 py-2.5 rounded-full bg-accent text-white text-sm
-           hover:bg-indigo-600
-           focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
+    @apply btn rounded-full bg-accent px-5 py-2.5 text-sm text-white hover:bg-teal-700 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
   }
 
-  /* ── Inputs ──────────────────────────────────── */
   .input-field {
-    @apply w-full px-4 py-3 rounded-xl border border-border bg-white
-           text-ink placeholder:text-ink-muted text-[0.9375rem]
-           transition-all duration-150
-           focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent
-           focus:bg-white hover:border-neutral-400
-           disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed;
+    @apply w-full rounded-xl border border-border bg-white px-4 py-3 text-[0.9375rem] text-ink placeholder:text-ink-muted transition-all duration-150 hover:border-neutral-400 focus:border-transparent focus:bg-white focus:outline-none focus:ring-2 focus:ring-ink disabled:cursor-not-allowed disabled:bg-neutral-50 disabled:text-neutral-400;
   }
 
   .input-title {
-    @apply w-full py-3 bg-transparent border-0 border-b-2 border-border
-           text-3xl sm:text-4xl font-bold text-ink placeholder:text-ink-faint
-           transition-colors duration-200
-           focus:outline-none focus:border-ink;
-    font-family: 'Merriweather', Georgia, serif;
+    @apply w-full border-0 border-b-2 border-border bg-transparent py-3 text-3xl font-bold text-ink placeholder:text-ink-faint transition-colors duration-200 focus:border-ink focus:outline-none sm:text-4xl;
+    font-family: 'Source Serif 4', Georgia, serif;
   }
 
-  /* ── Cards ───────────────────────────────────── */
   .card {
-    @apply bg-white rounded-2xl border border-border shadow-card p-6;
+    @apply rounded-2xl border border-border bg-white p-6 shadow-card;
   }
 
   .card-hover {
     @apply card transition-shadow duration-200 hover:shadow-card-hover;
   }
 
-  /* ── Article card (feed) ─────────────────────── */
   .article-card {
-    @apply py-8 border-b border-border/60 cursor-pointer
-           transition-all duration-200 group;
+    @apply group cursor-pointer border-b border-border/60 py-8 transition-all duration-200;
   }
 
   .article-card:last-of-type {
     @apply border-b-0;
   }
 
-  /* ── Tags ────────────────────────────────────── */
   .tag {
-    @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium
-           bg-neutral-100 text-neutral-600 hover:bg-neutral-200
-           transition-colors duration-150 cursor-pointer;
+    @apply inline-flex cursor-pointer items-center rounded-full bg-neutral-100 px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors duration-150 hover:bg-neutral-200;
   }
 
   .tag-published {
-    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-           text-xs font-semibold bg-emerald-50 text-emerald-700;
+    @apply inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700;
   }
 
   .tag-draft {
-    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-           text-xs font-semibold bg-amber-50 text-amber-700;
+    @apply inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700;
   }
 
-  /* ── Avatar ──────────────────────────────────── */
   .avatar {
-    @apply flex-shrink-0 rounded-full flex items-center justify-center
-           font-semibold text-white uppercase select-none;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    @apply flex flex-shrink-0 select-none items-center justify-center rounded-full font-semibold uppercase text-white;
+    background: linear-gradient(135deg, #0f766e, #0ea5a2);
   }
 
-  /* ── Badge ───────────────────────────────────── */
-  .badge {
-    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
-  }
-
-  /* ── Divider ─────────────────────────────────── */
   .divider {
-    @apply border-t border-border my-8;
+    @apply my-8 border-t border-border;
   }
 
-  /* ── Log viewer ──────────────────────────────── */
-  .log-line    { @apply flex gap-3 font-mono text-xs py-1.5 border-b border-neutral-800; }
-  .log-info    { @apply text-sky-400; }
-  .log-warn    { @apply text-amber-400; }
-  .log-error   { @apply text-red-400; }
-  .log-debug   { @apply text-neutral-500; }
-  .log-success { @apply text-emerald-400; }
+  .skeleton {
+    @apply animate-skeleton rounded-lg bg-neutral-100;
+  }
 
-  /* ── Prose content ───────────────────────────── */
   .prose-content {
     @apply text-neutral-700 leading-[1.85];
-    font-family: 'Merriweather', Georgia, serif;
+    font-family: 'Source Serif 4', Georgia, serif;
     font-size: 1.125rem;
   }
 
@@ -158,56 +164,54 @@
   }
 
   .prose-content h2 {
-    @apply text-2xl font-bold text-ink mt-10 mb-4;
-    font-family: 'Merriweather', Georgia, serif;
+    @apply mt-10 mb-4 text-2xl font-bold text-ink;
+    font-family: 'Source Serif 4', Georgia, serif;
   }
 
   .prose-content h3 {
-    @apply text-xl font-bold text-ink mt-8 mb-3;
-    font-family: 'Merriweather', Georgia, serif;
+    @apply mt-8 mb-3 text-xl font-bold text-ink;
+    font-family: 'Source Serif 4', Georgia, serif;
   }
 
   .prose-content blockquote {
-    @apply border-l-4 border-accent pl-5 italic text-ink-secondary my-6;
+    @apply my-6 border-l-4 border-accent pl-5 italic text-ink-secondary;
   }
 
-  /* ── Skeleton ────────────────────────────────── */
-  .skeleton {
-    @apply bg-neutral-100 rounded-lg animate-skeleton;
-  }
-
-  /* ── Navbar specific ─────────────────────────── */
-  .nav-link {
-    @apply text-sm font-medium text-ink-secondary transition-colors duration-150
-           hover:text-ink relative;
-  }
-
-  .nav-link-active {
-    @apply text-ink;
-  }
-
-  .nav-link-active::after {
-    content: '';
-    @apply absolute -bottom-1 left-0 right-0 h-0.5 bg-ink rounded-full;
-  }
-
-  /* ── Toggle switch ───────────────────────────── */
   .toggle-track {
-    @apply w-11 h-6 rounded-full transition-colors duration-200 relative cursor-pointer;
+    @apply relative h-6 w-11 cursor-pointer rounded-full transition-colors duration-200;
   }
 
   .toggle-thumb {
-    @apply absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white
-           shadow-sm transition-transform duration-200;
+    @apply absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200;
   }
+
+  .nav-pill {
+    @apply rounded-lg px-3 py-1.5 text-sm font-medium text-ink-secondary transition-colors hover:bg-neutral-50 hover:text-ink;
+  }
+
+  .nav-pill-active {
+    @apply bg-neutral-100 text-ink;
+  }
+
+  .menu-link {
+    @apply block px-4 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-neutral-50 hover:text-ink;
+  }
+
+  .footer-link {
+    @apply text-xs text-ink-muted transition-colors hover:text-ink;
+  }
+
+  .log-line    { @apply flex gap-3 border-b border-neutral-800 py-1.5 font-mono text-xs; }
+  .log-info    { @apply text-sky-400; }
+  .log-warn    { @apply text-amber-400; }
+  .log-error   { @apply text-red-400; }
+  .log-debug   { @apply text-neutral-500; }
+  .log-success { @apply text-emerald-400; }
 }
 
-/* ─── Scrollbar ─────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #a3a3a3; }
+::-webkit-scrollbar-thumb { background: #c9c9c9; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #9e9e9e; }
 
-/* ─── Focus visible only ────────────────────────────────────────── */
 :focus:not(:focus-visible) { outline: none; }
-

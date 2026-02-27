@@ -26,7 +26,7 @@ export default function EditBlogPage({ params }: EditBlogPageProps) {
   }, [id]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-surface">
       <Navbar />
 
       <main className="flex-1">
@@ -62,7 +62,4 @@ export default function EditBlogPage({ params }: EditBlogPageProps) {
   );
 }
 
-interface EditBlogPageProps {
-  params: Promise<{ id: string }>;
-}
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function NewBlogPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-surface">
       <Navbar />
 
       <main className="flex-1">

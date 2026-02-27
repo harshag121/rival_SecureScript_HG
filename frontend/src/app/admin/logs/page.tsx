@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 interface LogEntry {
   timestamp: string;
@@ -48,8 +49,8 @@ export default function LogsPage() {
   const esRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-    const es = new EventSource(`${API}/api/admin/logs`);
+    const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+    const es = new EventSource(`${API}/admin/logs`);
     esRef.current = es;
 
     es.onopen = () => setIsConnected(true);
@@ -188,6 +189,7 @@ export default function LogsPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

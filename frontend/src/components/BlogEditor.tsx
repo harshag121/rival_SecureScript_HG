@@ -199,9 +199,3 @@ export function BlogEditor({ initialData, mode }: BlogEditorProps) {
     </div>
   );
 }
-
-interface BlogEditorProps {
-  initialData?: Blog;
-  mode: 'create' | 'edit';
-}
-

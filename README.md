@@ -8,9 +8,9 @@ A production-ready blog platform built with **NestJS + Prisma + PostgreSQL** (ba
 
 | Service  | URL |
 |----------|-----|
-| Frontend | _Deploy to Vercel_ |
-| Backend  | _Deploy to Railway / Render_ |
-| Database | _Neon / Supabase_ |
+| Frontend | https://rival-secure-script-hg.vercel.app/ |
+| Backend  | https://rival-securescript-hg.onrender.com/api |
+| Database | PostgreSQL (Neon) |
 
 ---
 
@@ -135,12 +135,42 @@ Backend runs at `http://localhost:3001/api`
 
 ```bash
 cd frontend
-cp .env.local.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:3001/api
+cp .env.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:3001/api
 npm install
 npm run dev
 ```
 
 Frontend runs at `http://localhost:3000`
+
+---
+
+## 🧪 Automated Testing & Quality Checks
+
+### Backend
+
+```bash
+cd backend
+npm run test
+npm run build
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm run lint
+npm run type-check
+npm run build
+```
+
+### Production Smoke Test (manual)
+
+- Register + login
+- Create/edit/delete blog from dashboard
+- Verify unpublished blog returns 404 via `/public/blogs/:slug`
+- Verify `/public/feed` pagination and newest-first order
+- Like/unlike (duplicate like blocked)
+- Add/list comments without page reload
 
 ---
 
